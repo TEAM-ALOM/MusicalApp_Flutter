@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:musical_app/page/myWriteScreen.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({super.key});
@@ -63,6 +64,11 @@ class UserPage extends StatelessWidget {
               color: Colors.grey,
             ),
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>
+                   myWriteScreen()),
+              );
             },
           ),
           ListTile(

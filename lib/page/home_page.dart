@@ -22,6 +22,36 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                            Text(
+                              "검색",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            TextFormField(
+                              style: const TextStyle(fontSize: 18.0),
+                              keyboardType: TextInputType.name,
+                              decoration: InputDecoration(
+                                enabledBorder: UnderlineInputBorder(),
+                                suffixIcon: Icon(Icons.search),
+                              ),
+                            ),
+                          ],
+                      ),
+                    ),
+              SizedBox(height: 30,),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 height: 300, //260은 아무것도 찜 안했을 때
                 decoration: BoxDecoration(
                   color: Colors.grey.withOpacity(0.3),

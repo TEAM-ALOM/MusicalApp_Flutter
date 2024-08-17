@@ -5,6 +5,8 @@ import 'package:musical_app/page/community_page.dart';
 import 'package:musical_app/page/home_page.dart';
 import 'package:musical_app/page/user_page.dart';
 import 'package:musical_app/page/wishlist_page.dart';
+import 'package:musical_app/page/SearchDetailsScreen.dart';
+import 'package:musical_app/page/notificationScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -33,19 +35,40 @@ class HomeScreen extends StatelessWidget {
     Icons.notifications,
   ];
 
+
   @override
   Widget build(BuildContext context) {
+    // 각 페이지에 대한 Actions를 정의
+    final List<List<Widget>> pageActions = [
+      [IconButton(icon: Icon(Icons.notifications), onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              notificationScreen()),
+        ); })],
+      [IconButton(icon: Icon(Icons.more_horiz), onPressed: () { print("Add clicked on CalenderPage"); })],    // Actions for CalenderPage
+      [IconButton(icon: Icon(null), onPressed: () { print("Edit clicked on WishlistPage"); })],   // Actions for WishlistPage
+      [IconButton(icon: Icon(Icons.search), onPressed: () { Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SearchDetailsScreen()),
+      );})], // Actions for CommunityPage
+      [IconButton(icon: Icon(Icons.notifications), onPressed: () { print("Settings clicked on UserPage"); })],   // Actions for UserPage
+    ];
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
         actions: [
+          // 페이지 인덱스에 따라 actions 설정
           ValueListenableBuilder(
-            valueListenable: icon,
-            builder: (context, value, child) =>
-                IconButton(onPressed: () {}, icon: Icon(icon.value)),
-          )
+            valueListenable: pageIndex,
+            builder: (context, value, child) {
+              return Row(
+                children: pageActions[value], // 현재 페이지에 맞는 actions 설정
+              );
+            },
+          ),
         ],
       ),
       body: ValueListenableBuilder(
