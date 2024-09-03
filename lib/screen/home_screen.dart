@@ -48,10 +48,7 @@ class HomeScreen extends StatelessWidget {
         ); })],
       [IconButton(icon: Icon(Icons.more_horiz), onPressed: () { print("Add clicked on CalenderPage"); })],    // Actions for CalenderPage
       [IconButton(icon: Icon(null), onPressed: () { print("Edit clicked on WishlistPage"); })],   // Actions for WishlistPage
-      [IconButton(icon: Icon(Icons.search), onPressed: () { Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SearchDetailsScreen()),
-      );})], // Actions for CommunityPage
+      [IconButton(icon: Icon(Icons.search), onPressed: () { })], // Actions for CommunityPage
       [IconButton(icon: Icon(Icons.notifications), onPressed: () { print("Settings clicked on UserPage"); })],   // Actions for UserPage
     ];
     return Scaffold(

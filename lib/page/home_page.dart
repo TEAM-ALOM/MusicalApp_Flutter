@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:musical_app/page/SearchDetailsScreen.dart';
+import 'package:musical_app/screen/home_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,6 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,17 +41,35 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black,
                               ),
                             ),
-                            TextFormField(
-                              style: const TextStyle(fontSize: 18.0),
-                              keyboardType: TextInputType.name,
-                              decoration: InputDecoration(
-                                enabledBorder: UnderlineInputBorder(),
-                                suffixIcon: Icon(Icons.search),
-                              ),
+                    Row(
+                      children: [
+                        Column(
+                          children: [
+                            SizedBox(height: 22,),
+                            Container(
+                              height: 1,
+                              width:280,
+                              color: Colors.black,
                             ),
                           ],
-                      ),
+                        ),
+                        IconButton(
+                          iconSize: 25,
+                          icon: const Icon(Icons.search),
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) => SearchDetailsScreen(),
+                              isScrollControlled: true,
+                            );
+                          },
+                        ),
+
+                      ],
                     ),
+                  ]
+                ),
+              ),
               SizedBox(height: 30,),
               Container(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -381,3 +402,4 @@ class CalendarItem extends StatelessWidget {
     );
   }
 }
+

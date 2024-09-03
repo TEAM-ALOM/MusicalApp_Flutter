@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:musical_app/page/deleteIDscreen.dart';
+import 'package:musical_app/page/emailscreen.dart';
+import 'package:musical_app/page/inquiryscreen.dart';
+import 'package:musical_app/page/logoutscreen.dart';
 import 'package:musical_app/page/myWriteScreen.dart';
+import 'package:musical_app/page/passwordscreen.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({super.key});
@@ -76,7 +81,11 @@ class UserPage extends StatelessWidget {
             trailing: Icon(Icons.keyboard_arrow_right,
               color: Colors.grey,
             ),
-            onTap: () {
+            onTap: () {Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>
+                  emailScreen()),
+            );
             },
           ),
           ListTile(
@@ -84,7 +93,11 @@ class UserPage extends StatelessWidget {
             trailing: Icon(Icons.keyboard_arrow_right,
               color: Colors.grey,
             ),
-            onTap: () {
+            onTap: () {Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>
+                  passwordScreen()),
+            );
             },
           ),
           Divider(
@@ -98,7 +111,11 @@ class UserPage extends StatelessWidget {
             trailing: Icon(Icons.keyboard_arrow_right,
               color: Colors.grey,
             ),
-            onTap: () {
+            onTap: () {Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>
+                  inquiryScreen()),
+            );
             },
           ),
           ListTile(
@@ -106,7 +123,11 @@ class UserPage extends StatelessWidget {
             trailing: Icon(Icons.keyboard_arrow_right,
               color: Colors.grey,
             ),
-            onTap: () {
+            onTap: () {Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>
+                  logoutScreen()),
+            );
             },
           ),
           ListTile(
@@ -114,7 +135,11 @@ class UserPage extends StatelessWidget {
             trailing: Icon(Icons.keyboard_arrow_right,
               color: Colors.grey,
             ),
-            onTap: () {
+            onTap: () {Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>
+                  deleteIDScreen()),
+            );
             },
           ),
           Divider(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:musical_app/page/ChooseScreen.dart';
 
 class notificationScreen extends StatefulWidget {
   const notificationScreen({super.key});

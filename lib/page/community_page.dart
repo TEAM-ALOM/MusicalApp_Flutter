@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:musical_app/page/SearchDetailsScreen.dart';
 
 import 'WriteScreen.dart';
 
@@ -443,7 +444,8 @@ class _DetailScreen1State extends State<DetailScreen1> {
                       IconButton(
                         iconSize: 40,
                         icon: const Icon(Icons.chevron_right),
-                        onPressed:(){}, // 좋아요 버튼 클릭 시 호출
+                        onPressed:(){Navigator.of(context).push(MaterialPageRoute
+                          (builder: (context) => const SearchDetailsScreen()));},
                       ),
                     ],
                   ),
