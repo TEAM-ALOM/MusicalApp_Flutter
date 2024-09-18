@@ -1,5 +1,5 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musical_app/screen/home_screen.dart';
 import 'package:musical_app/screen/signup_screen.dart';
 
@@ -13,6 +13,12 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isAutoLogin = false;
   bool isVisibilityPassword = true;
+
+  TextEditingController idController = TextEditingController();
+  TextEditingController pwdController = TextEditingController();
+
+  var dio = Dio();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,28 +31,14 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 120,
               ),
-              const Text(
-                'LOGO',
-                style: TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                'slogan',
-                style: TextStyle(
-                  fontSize: 29,
-                ),
-              ),
+              //Image.asset('main_logo.png'),
               const SizedBox(
                 height: 80,
               ),
               TextFormField(
                 style: const TextStyle(fontSize: 18.0),
                 keyboardType: TextInputType.name,
+                controller: idController,
                 decoration: InputDecoration(
                   hintText: '이메일 또는 아이디',
                   border: OutlineInputBorder(
@@ -62,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.visiblePassword,
                 style: const TextStyle(fontSize: 18.0),
                 obscureText: isVisibilityPassword,
+                controller: pwdController,
                 decoration: InputDecoration(
                     hintText: '비밀번호',
                     border: OutlineInputBorder(
@@ -116,7 +109,35 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 15,
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  try {
+                    Response response = await dio.post(
+                      'http://ec2-52-78-180-65.ap-northeast-2.compute.amazonaws.com:3000/api/auth/login', // 로그인 경로로 수정
+                      data: {
+                        "username": "user@example.com", // 또는 이메일
+                        "password": "qwer1234!!"
+                      },
+                      options: Options(
+                        headers: {"Content-Type": "application/json"},
+                      ),
+                    );
+
+                    if (response.statusCode == 200) {
+                      // 로그인 성공 처리
+                      var token = response.data['token']; // 서버가 반환한 토큰
+                      print('로그인 성공: $token');
+                      // 받은 토큰을 저장하거나 이후 요청에 사용할 수 있습니다.
+                    } else {
+                      print('로그인 실패: ${response.statusCode}');
+                    }
+                  } on DioException catch (e) {
+                    if (e.response != null) {
+                      print('서버 응답 에러: ${e.response?.data}');
+                    } else {
+                      print('요청 에러: ${e.message}');
+                    }
+                  }
+
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

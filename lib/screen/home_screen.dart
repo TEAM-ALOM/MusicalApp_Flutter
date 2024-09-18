@@ -35,26 +35,60 @@ class HomeScreen extends StatelessWidget {
     Icons.notifications,
   ];
 
-
   @override
   Widget build(BuildContext context) {
     // 각 페이지에 대한 Actions를 정의
     final List<List<Widget>> pageActions = [
-      [IconButton(icon: Icon(Icons.notifications), onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>
-              notificationScreen()),
-        ); })],
-      [IconButton(icon: Icon(Icons.more_horiz), onPressed: () { print("Add clicked on CalenderPage"); })],    // Actions for CalenderPage
-      [IconButton(icon: Icon(null), onPressed: () { print("Edit clicked on WishlistPage"); })],   // Actions for WishlistPage
-      [IconButton(icon: Icon(Icons.search), onPressed: () { })], // Actions for CommunityPage
-      [IconButton(icon: Icon(Icons.notifications), onPressed: () { print("Settings clicked on UserPage"); })],   // Actions for UserPage
+      [
+        IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => notificationScreen()),
+              );
+            })
+      ],
+      [
+        IconButton(
+            icon: Icon(Icons.more_horiz),
+            onPressed: () {
+              print("Add clicked on CalenderPage");
+            })
+      ], // Actions for CalenderPage
+      [
+        IconButton(
+            icon: Icon(null),
+            onPressed: () {
+              print("Edit clicked on WishlistPage");
+            })
+      ], // Actions for WishlistPage
+      [
+        IconButton(icon: Icon(Icons.search), onPressed: () {})
+      ], // Actions for CommunityPage
+      [
+        IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              print("Settings clicked on UserPage");
+            })
+      ], // Actions for UserPage
     ];
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        leadingWidth: 150,
+        leading: Row(
+          children: [
+            SizedBox(
+              width: 30,
+            ),
+            Flexible(
+              child: Image.asset('app_bar_logo.png'),
+            )
+          ],
+        ),
         scrolledUnderElevation: 0,
         actions: [
           // 페이지 인덱스에 따라 actions 설정
@@ -66,6 +100,9 @@ class HomeScreen extends StatelessWidget {
               );
             },
           ),
+          SizedBox(
+            width: 30,
+          )
         ],
       ),
       body: ValueListenableBuilder(

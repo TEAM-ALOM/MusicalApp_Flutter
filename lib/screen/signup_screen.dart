@@ -1,3 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'signup_details_screen.dart';
 
@@ -9,8 +14,16 @@ class SignupScreen extends StatefulWidget {
 }
 
 class SignupScreenState extends State<SignupScreen> {
+  TextEditingController idController = TextEditingController();
+  TextEditingController pwdController = TextEditingController();
+  TextEditingController checkController = TextEditingController();
+  TextEditingController nicknameController = TextEditingController();
+
   bool isAgree = false;
   bool isVisibilityPassword = true;
+
+  var dio = Dio();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,11 +68,12 @@ class SignupScreenState extends State<SignupScreen> {
               TextFormField(
                 style: const TextStyle(fontSize: 18.0),
                 keyboardType: TextInputType.name,
+                controller: idController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)),
                   contentPadding:
-                  EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
                 ),
               ),
               const SizedBox(
@@ -78,13 +92,14 @@ class SignupScreenState extends State<SignupScreen> {
               TextFormField(
                 obscureText: isVisibilityPassword,
                 keyboardType: TextInputType.visiblePassword,
+                controller: pwdController,
                 style: const TextStyle(fontSize: 18.0),
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
                     suffixIcon: IconButton(
                       icon: Icon(Icons.visibility),
                       onPressed: () {
@@ -93,7 +108,7 @@ class SignupScreenState extends State<SignupScreen> {
                         });
                       },
                     )),
-                ),
+              ),
               const SizedBox(
                 height: 17,
               ),
@@ -110,13 +125,14 @@ class SignupScreenState extends State<SignupScreen> {
               TextFormField(
                 obscureText: isVisibilityPassword,
                 keyboardType: TextInputType.visiblePassword,
+                controller: checkController,
                 style: const TextStyle(fontSize: 18.0),
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
                     suffixIcon: IconButton(
                       icon: Icon(Icons.visibility),
                       onPressed: () {
@@ -125,7 +141,7 @@ class SignupScreenState extends State<SignupScreen> {
                         });
                       },
                     )),
-                ),
+              ),
               const SizedBox(
                 height: 17,
               ),
@@ -143,7 +159,7 @@ class SignupScreenState extends State<SignupScreen> {
                 '언제든 변경할 수 있어요',
                 style: TextStyle(
                   fontSize: 16,
-                    color: Colors.grey,
+                  color: Colors.grey,
                 ),
                 textAlign: TextAlign.left,
               ),
@@ -153,12 +169,13 @@ class SignupScreenState extends State<SignupScreen> {
               TextFormField(
                 keyboardType: TextInputType.name,
                 style: const TextStyle(fontSize: 18.0),
+                controller: nicknameController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   contentPadding:
-                  EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
                 ),
               ),
               const SizedBox(
@@ -170,9 +187,10 @@ class SignupScreenState extends State<SignupScreen> {
                     activeColor: Colors.black,
                     checkColor: Colors.white,
                     side: WidgetStateBorderSide.resolveWith(
-                          (states) {
+                      (states) {
                         if (states.contains(WidgetState.selected)) {
-                          return const BorderSide(color: Colors.black, width: 1);
+                          return const BorderSide(
+                              color: Colors.black, width: 1);
                         }
                         return const BorderSide(color: Colors.black, width: 1);
                       },
@@ -188,26 +206,54 @@ class SignupScreenState extends State<SignupScreen> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (BuildContext context) => SignupDetailsScreen(),
+                            builder: (BuildContext context) =>
+                                SignupDetailsScreen(),
                           ),
                         );
                       },
-                      child: Text('개인정보 수집 및 이용동의',
-                      style: TextStyle(
-                        fontSize: 16,
-                        decoration: TextDecoration.underline,
-                        color: Colors.black,
-                      ),
+                      child: Text(
+                        '개인정보 수집 및 이용동의',
+                        style: TextStyle(
+                          fontSize: 16,
+                          decoration: TextDecoration.underline,
+                          color: Colors.black,
+                        ),
                         textAlign: TextAlign.left,
-                      )
-                  ),
+                      )),
                 ],
               ),
               const SizedBox(
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  if (!isAgree) return;
+                  try {
+                    Response response = await dio.post(
+                      'http://ec2-52-78-180-65.ap-northeast-2.compute.amazonaws.com:3000/api/auth/register',
+                      data: {
+                        "username": "user@example.com",
+                        "password": "qwer1234!!", // 비밀번호는 요구사항에 맞춰서 작성
+                        "nickname": "example"
+                      },
+                      options: Options(
+                        headers: {"Content-Type": "application/json"},
+                      ),
+                    );
+
+                    if (response.statusCode == 201) {
+                      print('회원가입 성공: ${response.data}');
+                    } else {
+                      print('회원가입 실패: ${response.statusCode}');
+                    }
+                  } on DioException catch (e) {
+                    if (e.response != null) {
+                      print('서버 응답 에러: ${e.response?.data}');
+                    } else {
+                      print('요청 에러: ${e.message}');
+                    }
+                  }
+                },
                 child: const Text(
                   '회원가입',
                   style: TextStyle(color: Colors.white, fontSize: 18),

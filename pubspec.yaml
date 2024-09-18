@@ -7,6 +7,7 @@ environment:
   sdk: '>=3.4.3 <4.0.0'
 
 dependencies:
+  dio: ^5.7.0
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.3
@@ -19,3 +20,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+  - assets/main_logo.png
+  - assets/app_bar_logo.png
+
